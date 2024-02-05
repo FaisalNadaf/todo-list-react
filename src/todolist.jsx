@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-uuidv4();
+import CheckboxButton from "./markascomplet";
+import './todolist.css'
 
 export default function Todolist() {
   let [todos, settodos] = useState([{ task: "sample", id: uuidv4() }]);
@@ -24,9 +25,9 @@ export default function Todolist() {
   };
 
   return (
-    <>
+    <div className="cointainer">
       <input type="text" onChange={addupdate} value={newtodo} />
-      <button onClick={addNew}>add</button>
+      <button onClick={addNew} className="addbtn">add</button>
       <br />
       <br />
       <br />
@@ -37,12 +38,15 @@ export default function Todolist() {
               <tr key={todo.id}>
                 <td>{todo.task}</td>
                 <td>
-                  <button onClick={()=>deletetodo(todo.id)}>remove</button>
+                  <button onClick={()=>deletetodo(todo.id) } className="removebtn">remove</button>
+                </td>
+                <td>
+                  <CheckboxButton/>
                 </td>
               </tr>
             )
         )}
       </table>
-    </>
+    </div>
   );
 }
