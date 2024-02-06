@@ -4,7 +4,7 @@ import CheckboxButton from "./markascomplet";
 import './todolist.css'
 
 export default function Todolist() {
-  let [todos, settodos] = useState([{ task: "sample", id: uuidv4() }]);
+  let [todos, settodos] = useState([{ task: "sample", id: uuidv4(),isdone:false }]);
   let [newtodo, setnewtodo] = useState("");
 
   let addNew = () => {
@@ -23,6 +23,21 @@ export default function Todolist() {
       )
     );
   };
+  let done = (id) => {
+    settodos((pretodo) => 
+      pretodo.map((todo) => {
+        if(todo.id==id){
+          return {...todo,isdone:true,};
+        }else{
+          return todo;
+        }
+      }
+       
+      )
+    );
+  };
+
+  
 
   return (
     <div className="cointainer">
@@ -33,19 +48,21 @@ export default function Todolist() {
       <br />
       <table>
         {todos.map(
-          (todo, id) =>
-            todo !== "" && (
+          (todo) =>
+            todo.task !== "" && (
               <tr key={todo.id}>
-                <td>{todo.task}</td>
+                <td style={todo.isdone ? {textDecoration:'line-through'}:{textDecoration:'none'}}>{todo.task}</td>
                 <td>
                   <button onClick={()=>deletetodo(todo.id) } className="removebtn">remove</button>
                 </td>
                 <td>
-                  <CheckboxButton/>
+                 <button  onClick={()=>done(todo.id) 
+                }>done</button>
                 </td>
               </tr>
             )
         )}
+
       </table>
     </div>
   );
